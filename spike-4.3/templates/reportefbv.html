@@ -1,0 +1,75 @@
+<style>
+    #contenedor{
+        display: flex; 
+        width: 100%;
+        gap: 20px;  
+    }
+
+    #contenedor > div{
+        width: 50%;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    table{
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td{
+        border: 1px solid black;
+        padding: 5px;
+        text-align: left;
+    }
+</style>
+<h1>Listado y creacion con FBV</h1>
+<div id="contenedor">
+    <div>
+        <table>
+            <thead>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Fecha</th>
+                <th>Solicitado por</th>
+                <th>Dirigido a</th>
+                <th>Estado</th>
+            </thead>
+            <tbody>
+                {%for reporte in reportes%}
+                <tr>
+                    <td>{{reporte.nombre_reporte}}</td>
+                    <td>{{reporte.descripcion}}</td>
+                    <td>{{reporte.fecha_alta}}</td>
+                    <td>{{reporte.solicitado_por}}</td>
+                    <td>{{reporte.dirigido_a}}</td>
+                    <td>{{reporte.estado}}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <form method="POST" action="/reporte">
+            <label>Nombre del reporte:</label><br>
+            <input type="text" name="nombre_reporte" required><br><br>
+
+            <label>Descripción:</label><br>
+            <textarea name="descripcion" required></textarea><br><br>
+
+            <label>Solicitado por:</label><br>
+            <input type="text" name="solicitado_por" required><br><br>
+
+            <label>Dirigido a:</label><br>
+            <input type="text" name="dirigido_a" required><br><br>
+
+            <label>Estado:</label><br>
+            <select name="estado">
+                <option value="Pendiente">Pendiente</option>
+                <option value="En proceso">En proceso</option>
+                <option value="Completado">Completado</option>
+            </select><br><br>
+
+            <button type="submit">Guardar</button>
+        </form>
+    </div>
+</div>

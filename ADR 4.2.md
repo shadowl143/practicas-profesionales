@@ -1,4 +1,4 @@
-# ADR 4.2 — <título de la decisión>
+# ADR 4.2 — Elegir el framework
 **Contexto:** Es el momento de elegir que framework es el mejor para este proyecto, esta entre flask y django
 **Opciones:** A = Flask | B = Django
 **Criterio:** Que tan grande es el proyecto? La curva de aprendizaje en cual es mayor? Que puede funcionar mejor en un proyecto escalable?
