@@ -5,8 +5,12 @@ app = Flask("__main__")
 reportes = []
 id = 1
 
+@app.route("/reporte/<name>")
 @app.route("/reporte")
-def index():
+def index(name:str = ''):
+    if name != '':
+        filtrados = [r for r in reportes if r["dirigido_a"] == name]
+        return render_template("reportefbv.html", reportes = filtrados)
     return render_template("reportefbv.html", reportes = reportes)
 
 @app.route("/reporte", methods=["POST"])

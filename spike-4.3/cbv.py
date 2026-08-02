@@ -9,9 +9,11 @@ contador_id = 1
 
 
 class ReporteView(MethodView):
-    def get(self):
-        # Mostrar página con tabla y formulario
-        return render_template("reportecbv.html", reportes=reportes)
+    def get(self, name:str):
+        if name != '':
+            filtrados = [r for r in reportes if r["dirigido_a"] == name]
+            return render_template("reportecbv.html", reportes = filtrados)
+        return render_template("reportecbv.html", reportes = reportes)
 
     def post(self):
         # Crear reporte desde formulario
@@ -36,7 +38,11 @@ class ReporteView(MethodView):
 
 # Registrar vista principal (GET y POST)
 reporte_view = ReporteView.as_view("reporte")
-app.add_url_rule("/reporte", view_func=reporte_view, methods=["GET", "POST"])
+app.add_url_rule("/reporte", defaults={"name": ''}, view_func=reporte_view, methods=["GET"])
+
+app.add_url_rule("/reporte/<string:name>", view_func=reporte_view, methods=["GET"])
+
+app.add_url_rule("/reporte", view_func=reporte_view, methods=["POST"])
 
 
 if __name__ == "__main__":
