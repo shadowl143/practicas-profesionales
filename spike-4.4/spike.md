@@ -1,5 +1,5 @@
-|se vio el scipt|opcion|
------------------------
-|no             | a    |
-|si             | b    |
-|si             | c
+| se vio el script | opcion |
+| ---------------- | ------ |
+| no               | a      |
+| si               | b      |
+| si               | c      |
