@@ -1,7 +1,9 @@
 from flask import Flask, request, render_template, redirect, url_for
 from flask.views import MethodView
-from datetime import datetime
-
+import datetime, platform
+contenido = f"{datetime.datetime.now().isoformat()} {platform.node()} {platform.platform()}"
+with open("spike-4.3/info.txt", "a", encoding="utf-8") as f:
+    f.write(contenido + "\n")
 app = Flask(__name__)
 
 reportes = []
