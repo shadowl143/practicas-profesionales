@@ -1,7 +1,7 @@
 # seed.py — 20 clientes, 200 pedidos. Solo stdlib.
 import sqlite3, random
 
-def seed(db="spike.db", n_clientes=20, n_pedidos=200, semilla=42):
+def seed(db="../spike.db", n_clientes=20, n_pedidos=200, semilla=42):
     random.seed(semilla) # reproducible: mismo dataset para todos
     con = sqlite3.connect(db)
     con.executescript("""
