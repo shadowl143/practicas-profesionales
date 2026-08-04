@@ -1,0 +1,1 @@
+1. https://pyjwt.readthedocs.io/en/stable/ manejo de jwt con flask.
