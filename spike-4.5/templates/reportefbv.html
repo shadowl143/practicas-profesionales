@@ -1,0 +1,84 @@
+<style>
+    #contenedor {
+        display: flex;
+        width: 100%;
+        gap: 20px;
+    }
+
+    #contenedor>div {
+        width: 50%;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        border: 1px solid black;
+        padding: 5px;
+        text-align: left;
+    }
+</style>
+<h1>Listado y creacion con FBV</h1>
+<div id="contenedor">
+    <div>
+        <form method="POST" action="/reporte/basico">
+            <label>Nombre del reporte:</label><br>
+            <input type="text" name="nombre_reporte" required><br><br>
+
+            <label>Descripción:</label><br>
+            <textarea name="descripcion" required></textarea><br><br>
+
+            <label>Solicitado por:</label><br>
+            <input type="text" name="solicitado_por" required><br><br>
+
+            <label>Dirigido a:</label><br>
+            <select name="dirigido_a">
+                <option value="Carlos">Carlos</option>
+                <option value="Pedro">Pedro</option>
+                <option value="Roberto">Roberto</option>
+            </select><br><br>
+
+            <label>Estado:</label><br>
+            <select name="estado">
+                <option value="Pendiente">Pendiente</option>
+                <option value="En proceso">En proceso</option>
+                <option value="Completado">Completado</option>
+            </select><br><br>
+
+            <button type="submit">Guardar</button>
+        </form>
+    </div>
+    <div>
+        <form method="POST" action="/reporte/manual">
+            <label>Nombre del reporte:</label><br>
+            <input type="text" name="nombre_reporte" required><br><br>
+
+            <label>Descripción:</label><br>
+            <textarea name="descripcion" required></textarea><br><br>
+
+            <label>Solicitado por:</label><br>
+            <input type="text" name="solicitado_por" required><br><br>
+
+            <label>Dirigido a:</label><br>
+            <select name="dirigido_a">
+                <option value="Carlos">Carlos</option>
+                <option value="Pedro">Pedro</option>
+                <option value="Roberto">Roberto</option>
+            </select><br><br>
+
+            <label>Estado:</label><br>
+            <select name="estado">
+                <option value="Pendiente">Pendiente</option>
+                <option value="En proceso">En proceso</option>
+                <option value="Completado">Completado</option>
+            </select><br><br>
+
+            <button type="submit">Guardar</button>
+        </form>
+    </div>
+</div>

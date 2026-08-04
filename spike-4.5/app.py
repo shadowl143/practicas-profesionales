@@ -1,5 +1,6 @@
-from flask import Flask,request, render_template
+from flask import Flask,request, render_template, redirect
 from reporte import Reporte
+from reportfrom import ReporteForm
 from datetime  import datetime
 import datetime, platform
 contenido = f"{datetime.datetime.now().isoformat()} {platform.node()} {platform.platform()}"
@@ -27,8 +28,7 @@ def crear_reporte_basico():
         id=id,
         nombre_reporte=data.get("nombre_reporte"),
         descripcion=data.get("descripcion"),
-        cantidad=data.get("cantidad"),  # sin validar
-        fecha_alta=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        fecha_alta= datetime.datetime.now(),
         solicitado_por=data.get("solicitado_por"),
         dirigido_a=data.get("dirigido_a"),
         estado=data.get("estado")
@@ -39,31 +39,19 @@ def crear_reporte_basico():
     return render_template("reportefbv.html", reportes=reportes)
 
 @app.route("/reporte/manual", methods=["POST"])
+
 def crear_reporte_manual():
     global id
     data = request.form
 
-    # 1. Validar campos obligatorios
     if not data.get("nombre_reporte"):
         return "Campo obligatorio vacío", 400
-
-    # 2. Validar tipo de dato
-    try:
-        cantidad = int(data.get("cantidad"))
-    except (TypeError, ValueError):
-        return "Tipo de dato inválido", 400
-
-    # 3. Validar archivo
-    archivo = request.files.get("archivo")
-    if archivo and not archivo.filename.endswith(".pdf"):
-        return "Formato inválido", 400
 
     nuevo_reporte = Reporte(
         id=id,
         nombre_reporte=data.get("nombre_reporte"),
         descripcion=data.get("descripcion"),
-        cantidad=cantidad,
-        fecha_alta=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        fecha_alta=datetime.datetime.now(),
         solicitado_por=data.get("solicitado_por"),
         dirigido_a=data.get("dirigido_a"),
         estado=data.get("estado")
@@ -74,7 +62,25 @@ def crear_reporte_manual():
 
     return render_template("reportefbv.html", reportes=reportes)
 
+@app.route("/reporte/wtf", methods=["GET", "POST"])
+def crear_reporte_wtf():
+    global id
+    form = ReporteForm()
 
+    if form.validate_on_submit():
+        nuevo_reporte = ReporteForm(
+            id=id,
+            nombre_reporte=form.nombre_reporte.data,
+            solicitado_por=form.solicitado_por.data,
+            fecha_alta=datetime.datetime.now(),
+            dirigido_por=form.dirigido_por.data,
+            estado=form.estado.data
+        )
+        reportes.append(nuevo_reporte)
+        id += 1
+        return redirect("/reporte/wtf")
+
+    return render_template("reportefbv.html", form=form)
 
 if __name__ == "__main__":
     app.run(debug=True)
