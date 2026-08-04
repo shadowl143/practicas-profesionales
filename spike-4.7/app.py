@@ -5,7 +5,7 @@ import datetime
 
 app = Flask(__name__)
 
-@app.route("/login-jwt", methods=["GET", "POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login_jwt():
     if request.method == "POST":
         username = request.form["username"]
@@ -17,7 +17,7 @@ def login_jwt():
             payload = {
                 "user": username,
                 "rol": user["rol"],
-                "exp": datetime.datetime.now() + datetime.timedelta(minutes=5)
+                "exp": datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes=5)
             }
 
             token = jwt.encode(payload, SECRET, algorithm="HS256")
@@ -28,7 +28,7 @@ def login_jwt():
 
     return render_template("login.html")
 
-@app.route("/dashboard-jwt")
+@app.route("/dashboard")
 @jwt_required
 def dashboard_jwt():
     return render_template(
@@ -37,9 +37,9 @@ def dashboard_jwt():
         rol=request.user["rol"]
     )
 
-@app.route("/logout-jwt")
+@app.route("/logout")
 def logout_jwt():
-    response = redirect("/login-jwt")
+    response = redirect("/login")
     response.delete_cookie("token")
     return response
 

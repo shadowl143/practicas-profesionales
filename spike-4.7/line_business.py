@@ -15,13 +15,13 @@ def jwt_required(f):
         token = request.cookies.get("token")
 
         if not token:
-            return redirect("/login-jwt")
+            return redirect("/login")
 
         try:
             data = jwt.decode(token, SECRET, algorithms=["HS256"])
             request.user = data
         except:
-            return redirect("/login-jwt")
+            return redirect("/login")
 
         return f(*args, **kwargs)
 
